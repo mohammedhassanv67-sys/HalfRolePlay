@@ -90,19 +90,40 @@ async function sendVehicleWebhook(playerName, vehicleName, price, remainingBalan
 // AVATAR
 // ==============================================
 const avatarCache = new Map();
-async function fetchUserAvatar(discordId) {
+async function fetchUserAvatar(discordId, avatarHash) {
+    // إذا ما فيه discordId، استخدم الصورة الافتراضية
     if (!discordId) return 'assets/images/user-avatar.png';
-    if (avatarCache.has(discordId) && Date.now() - avatarCache.get(discordId).timestamp < 3600000) return avatarCache.get(discordId).url;
-    const def = `https://cdn.discordapp.com/embed/avatars/${parseInt(discordId) % 5}.png`;
+    
+    // إذا فيه avatar hash من Discord
+    if (avatarHash) {
+        return `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png?size=64`;
+    }
+    
+    // Check cache
+    if (avatarCache.has(discordId) && Date.now() - avatarCache.get(discordId).timestamp < 3600000) {
+        return avatarCache.get(discordId).url;
+    }
+    
+    // Discord default avatar
+    const defaultAvatarNumber = (BigInt(discordId) >> 22n) % 6n;
+    const def = `https://cdn.discordapp.com/embed/avatars/${defaultAvatarNumber}.png`;
+    
     try {
-        if (!config.discord.botToken || config.discord.botToken.length < 20) return def;
-        const r = await axios.get(`https://discord.com/api/v10/users/${discordId}`, { headers: { Authorization: `Bot ${config.discord.botToken}` }, timeout: 3000 });
-        const url = r.data.avatar ? `https://cdn.discordapp.com/avatars/${discordId}/${r.data.avatar}.png?size=64` : def;
-        avatarCache.set(discordId, { url, timestamp: Date.now() });
-        return url;
-    } catch (e) { return def; }
+        if (config.discord.botToken && config.discord.botToken.length > 20) {
+            const r = await axios.get(`https://discord.com/api/v10/users/${discordId}`, { 
+                headers: { Authorization: `Bot ${config.discord.botToken}` }, 
+                timeout: 3000 
+            });
+            const url = r.data.avatar ? 
+                `https://cdn.discordapp.com/avatars/${discordId}/${r.data.avatar}.png?size=64` : def;
+            avatarCache.set(discordId, { url, timestamp: Date.now() });
+            return url;
+        }
+    } catch (e) {
+        console.log('Avatar fetch failed, using default');
+    }
+    return def;
 }
-
 // ==============================================
 // COOLDOWN
 // ==============================================
@@ -889,14 +910,88 @@ app.get('/api/user', requireAuth, async (req, res) => { database.getUserByDiscor
 app.get('/api/user-vehicles/:accountId', requireAuth, (req, res) => { database.safeQuery(`SELECT id FROM characters WHERE account = ? LIMIT 1`, [parseInt(req.params.accountId)], (e, r) => { if (!r?.length) return res.json({ success: true, vehicles: [] }); database.safeQuery(`SELECT v.id, v.plate, COALESCE(vc.brand,'') as brand, COALESCE(vc.model,'') as custom_model, COALESCE(vc.year,'') as year FROM vehicles v LEFT JOIN vehicles_custom vc ON v.id = vc.id WHERE v.owner = ? AND v.deleted = '1' LIMIT 50`, [r[0].id], (e2, r2) => { res.json({ success: true, vehicles: (r2||[]).map(v => { const b=v.brand, m=v.custom_model, y=v.year; return { id: v.id, plate: v.plate||'No plate', name: b&&m?(y?`${b} ${m} ${y}`:`${b} ${m}`):(b||m||`Vehicle #${v.id}`) }; }) }); }); }); });
 app.get('/api/user-purchases/:discordId', requireAuth, (req, res) => mysqlDB.getUserPurchases(req.params.discordId, (e, p) => res.json({ success: !e, purchases: p || [] })));
 app.get('/api/avatar/:discordId', async (req, res) => res.json({ success: true, avatar: await fetchUserAvatar(req.params.discordId) }));
-app.get('/api/session', async (req, res) => { if (req.session.userId) { const av = req.session.discordId ? await fetchUserAvatar(req.session.discordId) : 'assets/images/user-avatar.png'; return res.json({ loggedIn: true, userId: req.session.userId, username: req.session.username, admin: req.session.admin, adminName: database.getRankName(req.session.admin||0), avatar: av, isLinked: !!req.session.accountId }); } res.json({ loggedIn: false }); });
+
+app.get('/api/session', async (req, res) => { 
+    if (req.session.userId) { 
+        // ✅ استخدام avatar من session مباشرة
+        const avatarHash = req.session.avatar || req.session.discordAvatar;
+        const discordId = req.session.discordId || req.session.userId;
+        
+        let avatarUrl = 'assets/images/user-avatar.png';
+        
+        if (avatarHash) {
+            // عنده صورة مخصصة من Discord
+            avatarUrl = `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png?size=64`;
+        } else if (discordId) {
+            // صورة افتراضية من Discord
+            const defaultNum = (BigInt(discordId) >> 22n) % 6n;
+            avatarUrl = `https://cdn.discordapp.com/embed/avatars/${defaultNum}.png`;
+        }
+        
+        return res.json({ 
+            loggedIn: true, 
+            userId: req.session.userId, 
+            username: req.session.username, 
+            admin: req.session.admin || 0, 
+            adminName: database.getRankName(req.session.admin || 0), 
+            avatar: avatarUrl, // ✅ الصورة الصحيحة
+            discordId: discordId,
+            isLinked: !!req.session.accountId 
+        }); 
+    } 
+    res.json({ loggedIn: false }); 
+});
+
 app.get('/api/link/status', requireAuth, (req, res) => { database.safeQuery(`SELECT username, mtaserial FROM accounts WHERE discord = ?`, [req.session.userId], (e, r) => { if (r?.length && r[0].mtaserial) res.json({ success: true, linked: true, username: r[0].username, serial: r[0].mtaserial }); else res.json({ success: true, linked: false }); }); });
 
 // ==============================================
 // OAUTH
 // ==============================================
 app.get('/auth/discord', (req, res) => { const p = new URLSearchParams({ client_id: config.discord.clientId, redirect_uri: config.discord.redirectUri, response_type: 'code', scope: 'identify email guilds', state: Math.random().toString(36).substring(2,15) }); res.redirect(`https://discord.com/api/oauth2/authorize?${p.toString()}`); });
-app.get('/auth/discord/callback', async (req, res) => { const { code } = req.query; if (!code) return res.redirect('/?error=no_code'); try { const t = await axios.post('https://discord.com/api/oauth2/token', new URLSearchParams({ client_id: config.discord.clientId, client_secret: config.discord.clientSecret, code, grant_type: 'authorization_code', redirect_uri: config.discord.redirectUri }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }); const u = await axios.get('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${t.data.access_token}` } }); req.session.userId = u.data.id; req.session.discordId = u.data.id; req.session.username = u.data.username; req.session.avatar = u.data.avatar; sendLoginWebhook(u.data.username, u.data.id, req.ip); req.session.save(e => res.redirect(e ? '/?error=session_error' : '/index.html')); } catch (e) { res.redirect('/?error=auth_failed'); } });
+
+app.get('/auth/discord/callback', async (req, res) => { 
+    const { code } = req.query; 
+    if (!code) return res.redirect('/?error=no_code'); 
+    try { 
+        const t = await axios.post('https://discord.com/api/oauth2/token', 
+            new URLSearchParams({ 
+                client_id: config.discord.clientId, 
+                client_secret: config.discord.clientSecret, 
+                code, 
+                grant_type: 'authorization_code', 
+                redirect_uri: config.discord.redirectUri 
+            }), 
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+        ); 
+        const u = await axios.get('https://discord.com/api/users/@me', { 
+            headers: { Authorization: `Bearer ${t.data.access_token}` } 
+        }); 
+        
+        // ✅ حفظ كل البيانات في session
+        req.session.userId = u.data.id; 
+        req.session.discordId = u.data.id; 
+        req.session.username = u.data.username; 
+        req.session.avatar = u.data.avatar;
+        req.session.discordAvatar = u.data.avatar; // ✅ مهم للصورة
+        
+        // ✅ جلب رتبة المستخدم من قاعدة البيانات
+        database.getUserByDiscord(u.data.id, (err, user) => {
+            if (user) {
+                req.session.admin = user.admin || 0;
+                req.session.accountId = user.id;
+            } else {
+                req.session.admin = 0;
+            }
+        });
+        
+        sendLoginWebhook(u.data.username, u.data.id, req.ip); 
+        req.session.save(e => res.redirect(e ? '/?error=session_error' : '/index.html')); 
+    } catch (e) { 
+        console.error('Auth error:', e.message);
+        res.redirect('/?error=auth_failed'); 
+    } 
+});
+
 app.get('/auth/logout', (req, res) => { const u = req.session?.username || 'Unknown'; const uid = req.session?.userId || ''; chatDB.prepare('INSERT INTO login_logs (username, user_id, action, ip) VALUES (?, ?, ?, ?)').run(u, uid, 'logout', req.ip); req.session.destroy(() => { sendLogoutWebhook(u); res.redirect('/'); }); });
 
 // ==============================================
