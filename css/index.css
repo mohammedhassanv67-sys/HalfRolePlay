@@ -1,0 +1,224 @@
+/* ============================================================
+   Hero Section - صورة خلفية + نجوم + تأثير ماوس
+   ============================================================ */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    cursor: default;
+}
+
+.hero-bg-image {
+    position: absolute;
+    inset: -20px;
+    background-image: url('../assets/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease-out;
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(6,6,11,0.7) 0%, rgba(6,6,11,0.4) 50%, rgba(6,6,11,0.8) 100%);
+    z-index: 1;
+}
+
+.stars-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+    transition: transform 0.3s ease-out;
+}
+
+.star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--duration) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: var(--opacity); transform: scale(1.2); }
+}
+
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 80px;
+    background: linear-gradient(to bottom, #fff, transparent);
+    border-radius: 50%;
+    animation: shoot var(--speed) linear infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+@keyframes shoot {
+    0% { opacity: 0; transform: translateX(0) translateY(0) rotate(var(--angle)); }
+    5% { opacity: 1; }
+    15% { opacity: 0; transform: translateX(-300px) translateY(300px) rotate(var(--angle)); }
+    100% { opacity: 0; transform: translateX(-300px) translateY(300px) rotate(var(--angle)); }
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+    animation: floatParticle var(--duration) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+@keyframes floatParticle {
+    0%, 100% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+    25% { opacity: var(--opacity); transform: translateY(-30px) translateX(20px) scale(1); }
+    50% { opacity: var(--opacity); transform: translateY(-60px) translateX(-10px) scale(1.2); }
+    75% { opacity: 0.3; transform: translateY(-30px) translateX(-20px) scale(0.8); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 700px;
+    padding: 40px 20px;
+    animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.2);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse-dot 2s infinite; }
+
+.hero-title { font-size: 52px; font-weight: 800; line-height: 1.3; margin-bottom: 16px; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+.hero-title span { background: linear-gradient(135deg, var(--primary-light), #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; }
+.hero-subtitle { font-size: 18px; color: var(--text-muted); margin-bottom: 32px; line-height: 1.7; }
+.hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+.hero-stats { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+
+.stat-item { text-align: center; background: rgba(0,0,0,0.2); backdrop-filter: blur(10px); padding: 16px 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); min-width: 120px; }
+.stat-number { display: block; font-size: 32px; font-weight: 800; color: var(--primary-light); }
+.stat-label { display: block; font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+/* ============================================================
+   الأقسام العامة
+   ============================================================ */
+.section { padding: 80px 0; }
+.section-header { text-align: center; margin-bottom: 40px; }
+.section-header h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-header h2 i { color: var(--primary-light); margin-left: 8px; }
+.section-header p { color: var(--text-muted); font-size: 15px; }
+
+/* ============================================================
+   أفضل اللاعبين والمتصلين
+   ============================================================ */
+.top-players-section { background: var(--bg-main); }
+.top-players-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.top-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; }
+.top-box-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border-color); background: rgba(124,58,237,0.03); }
+.top-box-header h3 { font-size: 15px; font-weight: 700; }
+.top-count { font-size: 12px; color: #4ade80; background: rgba(74,222,128,0.1); padding: 2px 10px; border-radius: 20px; margin-right: auto; }
+.btn-refresh { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-muted); width: 30px; height: 30px; border-radius: 6px; cursor: pointer; font-size: 11px; transition: var(--transition); }
+.btn-refresh:hover { color: var(--primary-light); border-color: var(--primary); }
+.top-box-search { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border-color); }
+.top-box-search i { color: var(--text-muted); font-size: 14px; }
+.top-box-search input { flex: 1; background: transparent; border: none; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
+.top-box-search input::placeholder { color: var(--text-muted); }
+.top-box-scroll { max-height: 350px; overflow-y: auto; }
+.top-box-scroll::-webkit-scrollbar { width: 3px; }
+.top-box-scroll::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+.top-list { padding: 8px 0; }
+.top-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; transition: var(--transition); }
+.top-item:hover { background: rgba(255,255,255,0.02); }
+.top-rank { font-size: 12px; font-weight: 700; color: var(--text-muted); width: 28px; text-align: center; }
+.top-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.top-info { flex: 1; min-width: 0; }
+.top-name { font-size: 13px; font-weight: 600; }
+.top-sub { font-size: 11px; color: var(--text-muted); }
+.top-value { font-size: 13px; font-weight: 700; color: var(--primary-light); }
+.top-status { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #4ade80; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; }
+.top-empty { text-align: center; padding: 30px; color: var(--text-muted); }
+.top-empty i { font-size: 28px; margin-bottom: 8px; opacity: 0.5; }
+.top-empty p { font-size: 13px; }
+
+/* ============================================================
+   القوانين
+   ============================================================ */
+.rules-section { background: rgba(0,0,0,0.2); }
+.rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.rule-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; text-align: center; transition: var(--transition); }
+.rule-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+.rule-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 22px; color: var(--primary-light); }
+.rule-card h3 { font-size: 16px; margin-bottom: 8px; }
+.rule-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+/* ============================================================
+   معلومات السيرفر
+   ============================================================ */
+.info-section { background: var(--bg-main); }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.info-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; transition: var(--transition); }
+.info-card:hover { border-color: var(--primary); }
+.info-icon { font-size: 28px; color: var(--primary-light); margin-bottom: 12px; }
+.info-card h3 { font-size: 18px; margin-bottom: 12px; }
+.info-list { list-style: none; }
+.info-list li { padding: 6px 0; font-size: 14px; display: flex; gap: 8px; }
+.info-list li span { color: var(--text-muted); min-width: 60px; }
+
+/* ============================================================
+   فريق الإدارة
+   ============================================================ */
+.staff-section { background: rgba(0,0,0,0.2); }
+.staff-filters { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; justify-content: center; }
+.filter-group { display: flex; align-items: center; gap: 8px; }
+.filter-group label { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
+.rank-filter, .btn-toggle-staff { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text); font-family: var(--font); font-size: 13px; cursor: pointer; }
+.rank-filter:focus { outline: none; border-color: var(--primary); }
+.btn-toggle-staff { display: flex; align-items: center; gap: 6px; transition: var(--transition); }
+.btn-toggle-staff:hover { border-color: var(--primary); color: var(--primary-light); }
+.staff-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-height: 500px; overflow-y: auto; padding: 4px; }
+.staff-grid::-webkit-scrollbar { width: 4px; }
+.staff-grid::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+.staff-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 16px 12px; text-align: center; transition: var(--transition); border-top: 3px solid transparent; }
+.staff-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-glow); }
+.staff-avatar-wrapper { position: relative; width: 56px; height: 56px; margin: 0 auto 10px; }
+.staff-avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); }
+.staff-status { position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--bg-card); }
+.staff-status.online { background: #4ade80; }
+.staff-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.staff-rank { font-size: 11px; font-weight: 600; }
+.staff-rank-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; border: 1px solid transparent; margin-top: 4px; }
+
+/* ============================================================
+   استجابة
+   ============================================================ */
+@media (max-width: 992px) { .top-players-grid { grid-template-columns: repeat(2, 1fr); } .staff-grid { grid-template-columns: repeat(3, 1fr); } .hero-title { font-size: 36px; } }
+@media (max-width: 768px) { .top-players-grid { grid-template-columns: 1fr; } .staff-grid { grid-template-columns: repeat(2, 1fr); max-height: 400px; } .hero-stats { gap: 20px; } .hero-title { font-size: 28px; } .hero-subtitle { font-size: 15px; } .hero { min-height: 80vh; } }
+@media (max-width: 480px) { .staff-grid { grid-template-columns: 1fr 1fr; } .hero-buttons { flex-direction: column; } .hero-title { font-size: 24px; } .stat-number { font-size: 24px; } }

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalfRolePlay - حالة السيرفر والوظائف</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/server-status.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="assets/images/logo.png" alt="HalfRolePlay">
+                <span>Half<span>RolePlay</span></span>
+            </div>
+        </div>
+
+        <div class="sidebar-user" id="sidebarUser">
+            <div class="sidebar-user-content hidden" id="sidebarUserContent">
+                <img src="assets/images/user-avatar.png" alt="User" class="sidebar-user-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name" id="sidebarUsername">زائر</div>
+                    <div class="sidebar-user-rank" id="sidebarRank">غير مسجل</div>
+                </div>
+            </div>
+            <div class="sidebar-guest" id="sidebarGuest">
+                <i class="fas fa-user-circle"></i>
+                <span>زائر</span>
+            </div>
+        </div>
+
+        <div class="sidebar-auth">
+            <button class="btn-login" id="sidebarLoginBtn" onclick="window.location.href='/auth/discord'">
+                <i class="fab fa-discord"></i> تسجيل الدخول
+            </button>
+            <div class="user-info-sidebar hidden" id="sidebarUserInfo">
+                <button class="btn-logout" onclick="window.location.href='/auth/logout'">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                </button>
+            </div>
+        </div>
+
+        <nav class="sidebar-links">
+            <a href="/index.html" class="sidebar-link active"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+            <a href="/shop.html" class="sidebar-link"><i class="fas fa-store"></i><span>المتجر</span></a>
+            <a href="/chat.html" class="sidebar-link"><i class="fas fa-comments"></i><span>الدردشة</span></a>
+            <a href="/apply.html" class="sidebar-link"><i class="fas fa-file-alt"></i><span>تقديم على الادارة</span></a>
+            <a href="/server-status.html" class="sidebar-link"><i class="fas fa-server"></i><span>حالة السيرفر</span></a>
+            <a href="/dashboard.html" class="sidebar-link"><i class="fas fa-user"></i><span>لوحة التحكم</span></a>
+            <a href="/admin.html" class="sidebar-link" id="sidebarAdminLink" style="display:none;"><i class="fas fa-shield-alt"></i><span>لوحة الادمن</span></a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-social">
+                <a href="$https://discord.gg/HalfRp" target="_blank"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2026 HalfRolePlay</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <button class="sidebar-toggle-mobile" onclick="toggleSidebarMobile()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="sidebar-overlay-mobile" onclick="toggleSidebarMobile()"></div>
+
+        <section class="server-status-page">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-server"></i> حالة السيرفر والوظائف</h1>
+                    <p>إحصائيات لحظية عن حالة السيرفر والوظائف المختلفة</p>
+                    <div class="last-update" id="lastUpdateDisplay">
+                        <i class="fas fa-clock"></i>
+                        آخر تحديث: <span id="lastUpdateTime">جاري التحميل...</span>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">المتصلون</span>
+                            <span class="stat-value" id="onlinePlayers">0</span>
+                        </div>
+                        <div class="stat-change">
+                            <span class="stat-max">الحد الأقصى: <span id="maxPlayers">1000</span></span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-user-plus"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">أعلى عدد اتصال</span>
+                            <span class="stat-value" id="peakPlayers">0</span>
+                        </div>
+                        <div class="stat-change">
+                            <span class="stat-max">تم تسجيله</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">مدة التشغيل</span>
+                            <span class="stat-value" id="uptime">0</span>
+                        </div>
+                        <div class="stat-change">
+                            <span class="stat-max">من آخر تشغيل</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-database"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">إجمالي الحسابات</span>
+                            <span class="stat-value" id="totalAccounts">0</span>
+                        </div>
+                        <div class="stat-change">
+                            <span class="stat-max">مسجلة في النظام</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-car"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">المركبات</span>
+                            <span class="stat-value" id="totalVehicles">0</span>
+                        </div>
+                        <div class="stat-change">
+                            <span class="stat-max">موجودة في السيرفر</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-users-cog"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">في الخدمة</span>
+                            <span class="stat-value" id="workingPlayers">0</span>
+                        </div>
+                        <div class="stat-change">
+                            <span class="stat-max">موظفين في وظائف</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <h3><i class="fas fa-chart-line"></i> نسبة امتلاء السيرفر</h3>
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar" style="width: 0%;">
+                            <span class="progress-text" id="progressText">0 / 1000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="server-status-box">
+                    <div class="server-status-header">
+                        <div class="status-indicator" id="statusIndicator">
+                            <span class="status-dot online" id="statusDot"></span>
+                            <span class="status-text" id="statusText">جاري التحميل...</span>
+                        </div>
+                        <div class="status-badges">
+                            <span class="badge" id="portBadge">الميناء: مفعل</span>
+                            <span class="badge" id="xpBadge">ضعف الخبرة: معطل</span>
+                        </div>
+                    </div>
+                    <div class="server-status-body">
+                        <div class="status-details">
+                            <div class="detail-item">
+                                <span class="detail-label">النسخة</span>
+                                <span class="detail-value">1.6.0</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">حالة الاتصال</span>
+                                <span class="detail-value" id="connectionStatus">مفتوح للجميع</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">آخر تحديث</span>
+                                <span class="detail-value" id="lastUpdate">جاري التحميل...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jobs-section">
+                    <div class="jobs-header">
+                        <h2><i class="fas fa-briefcase"></i> الوظائف</h2>
+                        <p>إحصائيات اللاعبين في كل وظيفة</p>
+                    </div>
+                    <div class="jobs-grid" id="jobsGrid">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>جاري تحميل بيانات الوظائف...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <h3>Half<span>RolePlay</span></h3>
+                        <p>حيث تبدأ المغامرة الحقيقية</p>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2026 HalfRolePlay. جميع الحقوق محفوظة</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/server-status.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+</html>

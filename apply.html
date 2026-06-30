@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalfRolePlay - تقديم على الادارة</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/apply.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="assets/images/logo.png" alt="HalfRolePlay">
+                <span>Half<span>RolePlay</span></span>
+            </div>
+        </div>
+
+        <div class="sidebar-user" id="sidebarUser">
+            <div class="sidebar-user-content hidden" id="sidebarUserContent">
+                <img src="assets/images/user-avatar.png" alt="User" class="sidebar-user-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name" id="sidebarUsername">زائر</div>
+                    <div class="sidebar-user-rank" id="sidebarRank">غير مسجل</div>
+                </div>
+            </div>
+            <div class="sidebar-guest" id="sidebarGuest">
+                <i class="fas fa-user-circle"></i>
+                <span>زائر</span>
+            </div>
+        </div>
+
+        <div class="sidebar-auth">
+            <button class="btn-login" id="sidebarLoginBtn" onclick="window.location.href='/auth/discord'">
+                <i class="fab fa-discord"></i> تسجيل الدخول
+            </button>
+            <div class="user-info-sidebar hidden" id="sidebarUserInfo">
+                <button class="btn-logout" onclick="window.location.href='/auth/logout'">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                </button>
+            </div>
+        </div>
+
+        <nav class="sidebar-links">
+            <a href="/index.html" class="sidebar-link"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+            <a href="/shop.html" class="sidebar-link"><i class="fas fa-store"></i><span>المتجر</span></a>
+            <a href="/chat.html" class="sidebar-link"><i class="fas fa-comments"></i><span>الدردشة</span></a>
+            <a href="/apply.html" class="sidebar-link active"><i class="fas fa-file-alt"></i><span>تقديم على الادارة</span></a>
+            <a href="/server-status.html" class="sidebar-link"><i class="fas fa-server"></i><span>حالة السيرفر</span></a>
+            <a href="/dashboard.html" class="sidebar-link hidden" id="sidebarDashboardLink"><i class="fas fa-user"></i><span>لوحة التحكم</span></a>
+            <a href="/admin.html" class="sidebar-link" id="sidebarAdminLink" style="display:none;"><i class="fas fa-shield-alt"></i><span>لوحة الادمن</span></a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-social">
+                <a href="https://discord.gg/HalfRp" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+            <p>&copy; 2026 HalfRolePlay</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <button class="sidebar-toggle-mobile" onclick="toggleSidebarMobile()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <section class="apply-section">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-file-alt"></i> تقديم على مراقب الديسكورد</h1>
+                    <p>قدم طلبك للانضمام الى فريق مراقبي الديسكورد</p>
+                </div>
+
+                <div class="apply-card" id="applyForm">
+                    <div class="apply-card-header">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>نموذج التقديم</h3>
+                    </div>
+                    <div class="apply-card-body">
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> اسمك في الديسكورد</label>
+                            <input type="text" id="discordUser" placeholder="سيتم تعبئته تلقائيا" disabled>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label><i class="fas fa-calendar"></i> كم عمرك؟</label>
+                                <input type="number" id="age" placeholder="ادخل عمرك" min="13" max="100">
+                            </div>
+                            <div class="form-group half">
+                                <label><i class="fas fa-clock"></i> كم ساعة تقدر تراقب يوميا؟</label>
+                                <select id="hours">
+                                    <option value="">اختر عدد الساعات</option>
+                                    <option value="1-2">1-2 ساعات</option>
+                                    <option value="3-4">3-4 ساعات</option>
+                                    <option value="5-6">5-6 ساعات</option>
+                                    <option value="7+">7 ساعات او اكثر</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-shield-alt"></i> هل لديك خبرة سابقة في المراقبة؟</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="experience" value="yes">
+                                    <span class="radio-custom"></span>
+                                    <span>نعم، لدي خبرة سابقة</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="experience" value="no">
+                                    <span class="radio-custom"></span>
+                                    <span>لا، هذه اول مرة لي</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-question-circle"></i> لماذا تريد ان تصبح مراقبا؟</label>
+                            <textarea id="whyMod" rows="4" placeholder="اشرح لماذا تريد الانضمام الى فريق المراقبة..."></textarea>
+                            <span class="char-count"><span id="whyModCount">0</span>/200</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-gavel"></i> ماذا ستفعل اذا قام شخص ما بخرق القوانين؟</label>
+                            <textarea id="ruleBreak" rows="4" placeholder="صف كيف ستتعامل مع شخص يخرق القوانين..."></textarea>
+                            <span class="char-count"><span id="ruleBreakCount">0</span>/200</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-users"></i> كيف تتعامل مع الخلافات بين الاعضاء؟</label>
+                            <textarea id="conflict" rows="4" placeholder="صف طريقتك في حل الخلافات بين الاعضاء..."></textarea>
+                            <span class="char-count"><span id="conflictCount">0</span>/200</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-star"></i> ما الذي يجعلك مناسبا لهذا المنصب؟</label>
+                            <textarea id="skills" rows="4" placeholder="اخبرنا عن مهاراتك وصفاتك التي تؤهلك لهذا المنصب..."></textarea>
+                            <span class="char-count"><span id="skillsCount">0</span>/200</span>
+                        </div>
+
+                        <button class="btn-submit" onclick="submitApplication()" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> ارسال الطلب
+                        </button>
+                    </div>
+                </div>
+
+                <div class="apply-card hidden" id="closedCard">
+                    <div class="apply-card-body" style="text-align:center; padding:60px 20px;">
+                        <i class="fas fa-lock" style="font-size:48px; color:#f87171; margin-bottom:16px;"></i>
+                        <h3 style="color:#f87171; margin-bottom:8px;">التقديم مقفول حاليا</h3>
+                        <p style="color:#888;">التقديم على الادارة مقفول حاليا. يرجى المحاولة في وقت لاحق.</p>
+                    </div>
+                </div>
+
+                <div class="apply-card hidden" id="successCard">
+                    <div class="apply-card-body" style="text-align:center; padding:60px 20px;">
+                        <i class="fas fa-check-circle" style="font-size:60px; color:#4ade80; margin-bottom:20px;"></i>
+                        <h2 style="color:#4ade80; margin-bottom:10px;">تم ارسال الطلب بنجاح!</h2>
+                        <p style="color:#888;">تم استلام طلبك وسيتم مراجعته في اقرب وقت ممكن.</p>
+                        <button class="btn-submit" onclick="location.reload()" style="margin-top:20px; max-width:200px;">
+                            <i class="fas fa-redo"></i> تقديم طلب اخر
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/apply.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+</html>

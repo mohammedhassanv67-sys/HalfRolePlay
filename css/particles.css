@@ -1,0 +1,58 @@
+/* ============================================================
+   Stars Container - لكل الصفحات
+   ============================================================ */
+.stars-container {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--duration) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: var(--opacity); transform: scale(1.2); }
+}
+
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 80px;
+    background: linear-gradient(to bottom, #fff, transparent);
+    border-radius: 50%;
+    animation: shoot var(--speed) linear infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+@keyframes shoot {
+    0% { opacity: 0; transform: translateX(0) translateY(0) rotate(var(--angle)); }
+    5% { opacity: 1; }
+    15% { opacity: 0; transform: translateX(-300px) translateY(300px) rotate(var(--angle)); }
+    100% { opacity: 0; transform: translateX(-300px) translateY(300px) rotate(var(--angle)); }
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+    animation: floatParticle var(--duration) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+@keyframes floatParticle {
+    0%, 100% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+    25% { opacity: var(--opacity); transform: translateY(-30px) translateX(20px) scale(1); }
+    50% { opacity: var(--opacity); transform: translateY(-60px) translateX(-10px) scale(1.2); }
+    75% { opacity: 0.3; transform: translateY(-30px) translateX(-20px) scale(0.8); }
+}

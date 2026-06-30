@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalfRolePlay - لوحة التحكم</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="assets/images/logo.png" alt="HalfRolePlay">
+                <span>Half<span>RolePlay</span></span>
+            </div>
+        </div>
+
+        <div class="sidebar-user" id="sidebarUser">
+            <div class="sidebar-user-content hidden" id="sidebarUserContent">
+                <img src="assets/images/user-avatar.png" alt="User" class="sidebar-user-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name" id="sidebarUsername">زائر</div>
+                    <div class="sidebar-user-rank" id="sidebarRank">غير مسجل</div>
+                </div>
+            </div>
+            <div class="sidebar-guest" id="sidebarGuest">
+                <i class="fas fa-user-circle"></i>
+                <span>زائر</span>
+            </div>
+        </div>
+
+        <div class="sidebar-auth">
+            <button class="btn-login" id="sidebarLoginBtn" onclick="window.location.href='/auth/discord'">
+                <i class="fab fa-discord"></i> تسجيل الدخول
+            </button>
+            <div class="user-info-sidebar hidden" id="sidebarUserInfo">
+                <button class="btn-logout" onclick="window.location.href='/auth/logout'">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                </button>
+            </div>
+        </div>
+
+        <nav class="sidebar-links">
+            <a href="/index.html" class="sidebar-link active"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+            <a href="/shop.html" class="sidebar-link"><i class="fas fa-store"></i><span>المتجر</span></a>
+            <a href="/chat.html" class="sidebar-link"><i class="fas fa-comments"></i><span>الدردشة</span></a>
+            <a href="/apply.html" class="sidebar-link"><i class="fas fa-file-alt"></i><span>تقديم على الادارة</span></a>
+            <a href="/server-status.html" class="sidebar-link"><i class="fas fa-server"></i><span>حالة السيرفر</span></a>
+            <a href="/dashboard.html" class="sidebar-link"><i class="fas fa-user"></i><span>لوحة التحكم</span></a>
+            <a href="/admin.html" class="sidebar-link" id="sidebarAdminLink" style="display:none;"><i class="fas fa-shield-alt"></i><span>لوحة الادمن</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-social">
+                <a href="https://discord.gg/HalfRp" target="_blank"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2026 HalfRolePlay</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <button class="sidebar-toggle-mobile" onclick="toggleSidebarMobile()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="sidebar-overlay-mobile" onclick="toggleSidebarMobile()"></div>
+
+        <section class="dashboard">
+            <div class="container">
+                <div class="dashboard-welcome">
+                    <div class="welcome-text">
+                        <h1>مرحبا بك، <span id="userDisplayName">...</span></h1>
+                        <p>هذه لوحة التحكم الشخصية الخاصة بك.</p>
+                    </div>
+                    <div class="welcome-status">
+                        <span class="status-dot online"></span>
+                        <span class="user-rank" id="userRank" style="font-weight:700;">Player</span>
+                    </div>
+                </div>
+
+                <!-- رسالة لغير المسجلين -->
+                <div id="loginPrompt" style="display:none;">
+                    <div class="dashboard-card" style="text-align:center; padding:40px;">
+                        <i class="fas fa-lock" style="font-size:48px; color:#f87171; margin-bottom:16px;"></i>
+                        <h3 style="color:#f87171; margin-bottom:8px;">يجب تسجيل الدخول</h3>
+                        <p style="color:#888; margin-bottom:20px;">يجب عليك تسجيل الدخول عن طريق الديسكورد لتتمكن من استخدام لوحة التحكم</p>
+                        <a href="/auth/discord" style="display:inline-flex; align-items:center; gap:10px; padding:14px 36px; background:#5865F2; color:#fff; border-radius:12px; text-decoration:none; font-weight:700; font-family:'Tajawal',sans-serif;">
+                            <i class="fab fa-discord"></i> تسجيل الدخول عن طريق الديسكورد
+                        </a>
+                    </div>
+                </div>
+
+                <!-- رسالة لغير المرتبطين بـ MTA -->
+                <div id="linkPrompt" style="display:none;">
+                    <div class="dashboard-card" style="text-align:center; padding:40px;">
+                        <i class="fas fa-unlink" style="font-size:48px; color:#fbbf24; margin-bottom:16px;"></i>
+                        <h3 style="color:#fbbf24; margin-bottom:8px;">حسابك غير مربوط بـ MTA</h3>
+                        <p style="color:#888; margin-bottom:20px;">يجب ربط حسابك بـ MTA عن طريق الديسكورد الرسمي لتتمكن من استخدام جميع المميزات</p>
+                        <a href="https://discord.gg/HalfRp" target="_blank" style="display:inline-flex; align-items:center; gap:10px; padding:14px 36px; background:#5865F2; color:#fff; border-radius:12px; text-decoration:none; font-weight:700; font-family:'Tajawal',sans-serif;">
+                            <i class="fab fa-discord"></i> الذهاب الى الديسكورد الرسمي
+                        </a>
+                        <p style="color:#666; font-size:12px; margin-top:10px;">بعد ربط حسابك، قم بتحديث الصفحة</p>
+                    </div>
+                </div>
+
+                <div id="dashboardContent">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card profile-card">
+                            <div class="card-header">
+                                <i class="fas fa-user-circle"></i>
+                                <h3>المعلومات الشخصية</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="profile-avatar-container">
+                                    <img src="assets/images/user-avatar.png" alt="Profile" class="profile-avatar" id="profileAvatar">
+                                    <div class="profile-rank-badge" id="profileRankBadge">Player</div>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label"><i class="fas fa-user"></i> اسم الحساب</span>
+                                    <span class="info-value" id="profileUsername">...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label"><i class="fas fa-id-card"></i> اسم الشخصية</span>
+                                    <span class="info-value" id="profileCharacter">...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label"><i class="fas fa-envelope"></i> البريد الالكتروني</span>
+                                    <span class="info-value" id="profileEmail">...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label"><i class="fas fa-key"></i> السيريال</span>
+                                    <span class="info-value" id="profileSerial">...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label"><i class="fas fa-star"></i> الرتبة</span>
+                                    <span class="info-value" id="profileAdmin">...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card money-card">
+                            <div class="card-header">
+                                <i class="fas fa-coins"></i>
+                                <h3>الاموال</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="money-row bank">
+                                    <div class="money-icon"><i class="fas fa-university"></i></div>
+                                    <div class="money-info">
+                                        <span class="money-label">البنك</span>
+                                        <span class="money-amount" id="bankMoney">0</span>
+                                    </div>
+                                </div>
+                                <div class="money-row wallet">
+                                    <div class="money-icon"><i class="fas fa-wallet"></i></div>
+                                    <div class="money-info">
+                                        <span class="money-label">المحفظة</span>
+                                        <span class="money-amount" id="walletMoney">0</span>
+                                    </div>
+                                </div>
+                                <div class="money-total">
+                                    <span>اجمالي الاموال</span>
+                                    <span class="total-amount" id="totalMoney">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card stats-card">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar"></i>
+                                <h3>احصاءات الشخصية</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="stat-row">
+                                    <span class="stat-label">مستوى الشخصية</span>
+                                    <div class="stat-bar"><div class="stat-fill" style="width:0%"></div></div>
+                                    <span class="stat-number level">1</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span class="stat-label">الخبرة</span>
+                                    <div class="stat-bar"><div class="stat-fill" style="width:0%"></div></div>
+                                    <span class="stat-number exp">0</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span class="stat-label">سمعة</span>
+                                    <div class="stat-bar"><div class="stat-fill" style="width:0%"></div></div>
+                                    <span class="stat-number reputation">0%</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span class="stat-label">ساعات اللعب</span>
+                                    <div class="stat-bar"><div class="stat-fill" style="width:0%"></div></div>
+                                    <span class="stat-number" id="hoursPlayed">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card ownership-card">
+                            <div class="card-header">
+                                <i class="fas fa-crown"></i>
+                                <h3>الاملاك - الراعي VIP</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="vipOwnership">
+                                    <div class="ownership-empty">
+                                        <i class="fas fa-crown"></i>
+                                        <span>لا يوجد راعي VIP نشط</span>
+                                        <a href="shop.html" class="ownership-link">شراء راعي VIP</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card ownership-card">
+                            <div class="card-header">
+                                <i class="fas fa-car"></i>
+                                <h3>الاملاك - السيارات</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="vehicleOwnership">
+                                    <div class="ownership-loading">
+                                        <i class="fas fa-spinner"></i>
+                                        <span>جاري التحميل...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card purchases-card">
+                        <div class="card-header">
+                            <i class="fas fa-shopping-bag"></i>
+                            <h3>اخر مشترياتي</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="recentPurchases">
+                                <div class="ownership-loading">
+                                    <i class="fas fa-spinner"></i>
+                                    <span>جاري التحميل...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h3><i class="fas fa-bolt"></i> اجراءات سريعة</h3>
+                        <div class="actions-grid">
+                            <button class="action-btn" onclick="window.location.href='shop.html'">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>المتجر</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <h3>Half<span>RolePlay</span></h3>
+                        <p>حيث تبدا المغامرة الحقيقية</p>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2026 HalfRolePlay. جميع الحقوق محفوظة</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+</html>

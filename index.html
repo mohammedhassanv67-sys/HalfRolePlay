@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalfRolePlay - الموقع الرسمي</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="assets/images/logo.png" alt="HalfRolePlay">
+                <span>Half<span>RolePlay</span></span>
+            </div>
+        </div>
+
+        <div class="sidebar-user" id="sidebarUser">
+            <div class="sidebar-user-content hidden" id="sidebarUserContent">
+                <img src="assets/images/user-avatar.png" alt="User" class="sidebar-user-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name" id="sidebarUsername">زائر</div>
+                    <div class="sidebar-user-rank" id="sidebarRank">غير مسجل</div>
+                </div>
+            </div>
+            <div class="sidebar-guest" id="sidebarGuest">
+                <i class="fas fa-user-circle"></i>
+                <span>زائر</span>
+            </div>
+        </div>
+
+        <div class="sidebar-auth">
+            <button class="btn-login" id="sidebarLoginBtn" onclick="window.location.href='/auth/discord'">
+                <i class="fab fa-discord"></i> تسجيل الدخول
+            </button>
+            <div class="user-info-sidebar hidden" id="sidebarUserInfo">
+                <button class="btn-logout" onclick="window.location.href='/auth/logout'">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                </button>
+            </div>
+        </div>
+
+        <nav class="sidebar-links">
+            <a href="/index.html" class="sidebar-link active"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+            <a href="/support.html" class="sidebar-link"><i class="fas fa-home"></i><span>الدعم الفني</span></a>
+            <a href="/shop.html" class="sidebar-link"><i class="fas fa-store"></i><span>المتجر</span></a>
+            <a href="/chat.html" class="sidebar-link"><i class="fas fa-comments"></i><span>الدردشة</span></a>
+            <a href="/apply.html" class="sidebar-link"><i class="fas fa-file-alt"></i><span>تقديم على الادارة</span></a>
+            <a href="/server-status.html" class="sidebar-link"><i class="fas fa-server"></i><span>حالة السيرفر</span></a>
+            <a href="/dashboard.html" class="sidebar-link"><i class="fas fa-user"></i><span>لوحة التحكم</span></a>
+            <a href="/admin.html" class="sidebar-link" id="sidebarAdminLink" style="display:none;"><i class="fas fa-shield-alt"></i><span>لوحة الادمن</span></a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-social">
+                <a href="https://discord.gg/HalfRp" target="_blank"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2026 HalfRolePlay</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <button class="sidebar-toggle-mobile" onclick="toggleSidebarMobile()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="sidebar-overlay-mobile" onclick="toggleSidebarMobile()"></div>
+
+        <!-- ============================================== -->
+        <!-- HERO - صورة خلفية + نجوم + تأثير ماوس -->
+        <!-- ============================================== -->
+        <section id="home" class="hero">
+            <div class="hero-bg-image"></div>
+            <div class="hero-overlay"></div>
+            <div class="stars-container"></div>
+            
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>سيرفر MTA:SA - HalfRolePlay</span>
+                </div>
+                <h1 class="hero-title">
+                    مرحبا بك في <span>Half</span>RolePlay
+                </h1>
+                <p class="hero-subtitle">
+                    تجربة رول بلاي فريدة من نوعها. انضم الينا وابدا مغامرتك الان!
+                </p>
+                <div class="hero-buttons">
+                    <a href="#info" class="btn-primary">
+                        <i class="fas fa-info-circle"></i> تعرف علينا
+                    </a>
+                    <a href="#" class="btn-secondary" onclick="showDiscordInvite()">
+                        <i class="fab fa-discord"></i> انضم لديسكورد
+                    </a>
+                    <a href="dashboard.html" id="heroDashboardLink" class="btn-dashboard hidden">
+                        <i class="fas fa-user"></i> لوحة التحكم
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">1500+</span>
+                        <span class="stat-label">لاعب نشط</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">سنوات من التميز</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">عضو في المجتمع</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- أفضل اللاعبين والمتصلين -->
+        <!-- ============================================== -->
+        <section id="top-players" class="section top-players-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-trophy"></i> افضل اللاعبين والمتصلون</h2>
+                    <p>قائمة المتصلين في السيرفر وافضل اللاعبين من حيث المال والساعات</p>
+                </div>
+
+                <div class="top-players-grid">
+                    <div class="top-box online-box">
+                        <div class="top-box-header">
+                            <span class="online-dot"></span>
+                            <h3>المتصلون</h3>
+                            <span class="top-count" id="onlineCount">0</span>
+                            <button class="btn-refresh" onclick="fetchOnlinePlayers()" title="تحديث">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div class="top-box-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchPlayer" placeholder="ابحث عن لاعب..." oninput="filterOnlinePlayers()">
+                        </div>
+                        <div class="top-box-scroll">
+                            <div class="top-list" id="onlinePlayersList">
+                                <div class="top-empty">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>جاري التحميل...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-box hours-box">
+                        <div class="top-box-header">
+                            <i class="fas fa-clock"></i>
+                            <h3>الاكثر لعبا</h3>
+                            <span class="top-count">10</span>
+                        </div>
+                        <div class="top-box-scroll">
+                            <div class="top-list" id="topHoursList">
+                                <div class="top-empty">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>جاري التحميل...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-box money-box">
+                        <div class="top-box-header">
+                            <i class="fas fa-coins"></i>
+                            <h3>الاكثر غنى</h3>
+                            <span class="top-count">10</span>
+                        </div>
+                        <div class="top-box-scroll">
+                            <div class="top-list" id="topMoneyList">
+                                <div class="top-empty">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>جاري التحميل...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- القوانين -->
+        <!-- ============================================== -->
+        <section id="rules" class="section rules-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-gavel"></i> قوانين الرول بلاي</h2>
+                    <p>التزم بهذه القوانين لتكون جزءا من مجتمعنا المميز</p>
+                </div>
+                <div class="rules-grid">
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="fas fa-handshake"></i></div>
+                        <h3>الاحترام والاخلاق</h3>
+                        <p>التزم بالاحترام مع جميع اللاعبين. لا للسب او التحرش او التمييز باي شكل من الاشكال.</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="fas fa-masks-theater"></i></div>
+                        <h3>الرول بلاي الجاد</h3>
+                        <p>التزم بشخصيتك خلال الرول بلاي. لا للخروج عن الشخصية او استخدام المعرفة الخارجية.</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="fas fa-ban"></i></div>
+                        <h3>الغش والمخالفات</h3>
+                        <p>يمنع استخدام اي نوع من انواع الغش او الاختراقات. كل من يخالف سيتم معاقبته فورا.</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="fas fa-users"></i></div>
+                        <h3>التعاون الجماعي</h3>
+                        <p>تعاون مع اللاعبين الاخرين وكن جزءا من المجتمع. ساعد الاخرين وشارك في الفعاليات.</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="fas fa-gavel"></i></div>
+                        <h3>احترام الادارة</h3>
+                        <p>احترم قرارات الادارة والتزم بتعليماتهم. هم هنا لمساعدتك وتحسين تجربتك.</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="fas fa-gamepad"></i></div>
+                        <h3>اللعب النظيف</h3>
+                        <p>العب بنزاهة ولا تستغل الثغرات. الابلاغ عن اي مشكلة يساعد في تحسين السيرفر للجميع.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- معلومات السيرفر -->
+        <!-- ============================================== -->
+        <section id="info" class="section info-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-server"></i> معلومات السيرفر</h2>
+                    <p>كل ما تحتاج معرفته عن سيرفر HalfRolePlay</p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-gamepad"></i></div>
+                        <h3>سيرفر MTA:SA</h3>
+                        <ul class="info-list">
+                            <li><span>الاسم:</span> HalfRolePlay</li>
+                            <li><span>النوع:</span> رول بلاي</li>
+                            <li><span>النسخة:</span> 1.6.0</li>
+                            <li><span>اللغة:</span> العربية</li>
+                            <li><span>الايبيه:</span> 161.97.115.69:22003</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <h3>ساعات العمل</h3>
+                        <ul class="info-list">
+                            <li><span>ايام الاسبوع:</span> 24/7</li>
+                            <li><span>الفعاليات:</span> يوميا</li>
+                            <li><span>دعم الادارة:</span> متوفر</li>
+                            <li><span>صيانة:</span> حسب الحاجة</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- فريق الإدارة -->
+        <!-- ============================================== -->
+        <section id="staff" class="section staff-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-users-cog"></i> فريق الادارة</h2>
+                    <p>فريق متخصص لخدمتك وتطوير السيرفر</p>
+                </div>
+                <div class="staff-filters">
+                    <div class="filter-group">
+                        <label><i class="fas fa-filter"></i> تصفية حسب الرتبة:</label>
+                        <select id="rankFilter" class="rank-filter" onchange="filterStaff()">
+                            <option value="all">جميع الرتب</option>
+                            <option value="13">مؤسس HalfRolePlay</option>
+                            <option value="12">Community Owner</option>
+                            <option value="11">Community Manager</option>
+                            <option value="10">Community Developer</option>
+                            <option value="9">Server Control</option>
+                            <option value="8">Founder</option>
+                            <option value="7">Vice Founder</option>
+                            <option value="6">Head Admin</option>
+                            <option value="5">Supervisor</option>
+                            <option value="4">Senior Admin</option>
+                            <option value="3">Lead Admin</option>
+                            <option value="2">Admin</option>
+                            <option value="1">Trial Admin</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-sort"></i> ترتيب حسب:</label>
+                        <select id="sortFilter" class="rank-filter" onchange="filterStaff()">
+                            <option value="highest">الاعلى رتبة</option>
+                            <option value="lowest">الادنى رتبة</option>
+                            <option value="name">الاسم (ا-ي)</option>
+                        </select>
+                    </div>
+                    <button class="btn-toggle-staff" onclick="toggleStaffVisibility()">
+                        <i class="fas fa-eye" id="toggleStaffIcon"></i>
+                        <span id="toggleStaffText">اخفاء الادارة</span>
+                    </button>
+                </div>
+                <div class="staff-grid" id="staffGrid">
+                    <div class="staff-loading">
+                        <i class="fas fa-spinner fa-spin"></i> جاري تحميل فريق الادارة...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <h3>Half<span>RolePlay</span></h3>
+                        <p>حيث تبدا المغامرة الحقيقية</p>
+                    </div>
+                    <div class="footer-links">
+                        <h4>روابط سريعة</h4>
+                        <a href="#home">الرئيسية</a>
+                        <a href="#rules">القوانين</a>
+                        <a href="#info">معلومات السيرفر</a>
+                        <a href="shop.html">المتجر</a>
+                        <a href="dashboard.html" id="footerDashboardLink" class="dashboard-link hidden">لوحة التحكم</a>
+                    </div>
+                    <div class="footer-social">
+                        <h4>تابعنا</h4>
+                        <div class="social-icons">
+                            <a href="https://discord.gg/HalfRp" target="_blank"><i class="fab fa-discord"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-tiktok"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 HalfRolePlay. جميع الحقوق محفوظة</p>
+                    <p>HalfRolePlay هو سيرفر MTA:SA مستقل</p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/hero-effects.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+</html>

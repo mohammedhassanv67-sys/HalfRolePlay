@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalfRolePlay - لوحة الادمن</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="assets/images/logo.png" alt="HalfRolePlay">
+                <span>Half<span>RolePlay</span></span>
+            </div>
+        </div>
+
+        <div class="sidebar-user" id="sidebarUser">
+            <div class="sidebar-user-content hidden" id="sidebarUserContent">
+                <img src="assets/images/user-avatar.png" alt="User" class="sidebar-user-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name" id="sidebarUsername">زائر</div>
+                    <div class="sidebar-user-rank" id="sidebarRank">غير مسجل</div>
+                </div>
+            </div>
+            <div class="sidebar-guest" id="sidebarGuest">
+                <i class="fas fa-user-circle"></i>
+                <span>زائر</span>
+            </div>
+        </div>
+
+        <div class="sidebar-auth">
+            <button class="btn-login" id="sidebarLoginBtn" onclick="window.location.href='/auth/discord'">
+                <i class="fab fa-discord"></i> تسجيل الدخول
+            </button>
+            <div class="user-info-sidebar hidden" id="sidebarUserInfo">
+                <button class="btn-logout" onclick="window.location.href='/auth/logout'">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                </button>
+            </div>
+        </div>
+
+        <nav class="sidebar-links">
+            <a href="/index.html" class="sidebar-link"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+            <a href="/shop.html" class="sidebar-link"><i class="fas fa-store"></i><span>المتجر</span></a>
+            <a href="/chat.html" class="sidebar-link"><i class="fas fa-comments"></i><span>الدردشة</span></a>
+            <a href="/apply.html" class="sidebar-link"><i class="fas fa-file-alt"></i><span>تقديم على الادارة</span></a>
+            <a href="/support.html" class="sidebar-link"><i class="fas fa-headset"></i><span>الدعم الفني</span></a>
+            <a href="/server-status.html" class="sidebar-link"><i class="fas fa-server"></i><span>حالة السيرفر</span></a>
+            <a href="/dashboard.html" class="sidebar-link hidden" id="sidebarDashboardLink"><i class="fas fa-user"></i><span>لوحة التحكم</span></a>
+            <a href="/admin.html" class="sidebar-link active" id="sidebarAdminLink" style="display:flex;"><i class="fas fa-shield-alt"></i><span>لوحة الادمن</span></a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-social">
+                <a href="https://discord.gg/HalfRp" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+            <p>&copy; 2026 HalfRolePlay</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <button class="sidebar-toggle-mobile" onclick="toggleSidebarMobile()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <section class="admin-section">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-shield-alt"></i> لوحة الادمن</h1>
+                    <p>ادارة الموقع والمراقبة</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="tab-overview"><i class="fas fa-chart-bar"></i> نظرة عامة</button>
+                    <button class="admin-tab" data-tab="tab-balance"><i class="fas fa-coins"></i> ادارة الرصيد</button>
+                    <button class="admin-tab" data-tab="tab-bans"><i class="fas fa-ban"></i> الحظر</button>
+                    <button class="admin-tab" data-tab="tab-shop"><i class="fas fa-store"></i> ادارة المتجر</button>
+                    <button class="admin-tab" data-tab="tab-logs"><i class="fas fa-list"></i> السجلات</button>
+                    <button class="admin-tab" data-tab="tab-stats"><i class="fas fa-chart-line"></i> احصائيات</button>
+                    <button class="admin-tab" data-tab="tab-search"><i class="fas fa-search"></i> بحث عن لاعب</button>
+                    <button class="admin-tab" data-tab="tab-staff"><i class="fas fa-users-cog"></i> الاداريين المتصلين</button>
+                    <button class="admin-tab" data-tab="tab-chat"><i class="fas fa-comments"></i> ادارة الدردشة</button>
+                    <button class="admin-tab" data-tab="tab-tickets"><i class="fas fa-ticket-alt"></i> التذاكر</button>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: نظرة عامة -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content active" id="tab-overview">
+                    <div class="admin-stats" id="adminStats">
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-comments"></i></div><div class="stat-info"><span class="stat-label">اجمالي الرسائل</span><span class="stat-value" id="totalMessages">0</span></div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><span class="stat-label">اجمالي المشتريات</span><span class="stat-value" id="totalPurchases">0</span></div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><span class="stat-label">المتصلون</span><span class="stat-value" id="onlinePlayers">0</span></div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-ticket-alt"></i></div><div class="stat-info"><span class="stat-label">التذاكر المفتوحة</span><span class="stat-value" id="openTicketsCount">0</span></div></div>
+                    </div>
+                    <div class="admin-card"><div class="card-header"><i class="fas fa-toggle-on"></i><h3>حالة التقديمات</h3></div><div class="card-body"><div id="applyStatusDisplay" style="margin-bottom:14px; padding:10px; border-radius:8px; text-align:center; font-weight:600;">جاري التحميل...</div><button class="btn btn-primary" onclick="toggleApplications()" id="toggleApplyBtn"><i class="fas fa-sync-alt"></i> تبديل الحالة</button></div></div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: ادارة الرصيد -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-balance">
+                    <div class="admin-grid-2">
+                        <div class="admin-card">
+                            <div class="card-header"><i class="fas fa-plus-circle"></i><h3>اعطاء رصيد</h3></div>
+                            <div class="card-body">
+                                <div class="input-group"><label>معرف الديسكورد</label><input type="text" id="giveBalanceUser" placeholder="Discord ID"></div>
+                                <div class="input-group"><label>المبلغ (جنيه)</label><input type="number" id="giveBalanceAmount" placeholder="المبلغ"></div>
+                                <div class="input-group"><label>السبب</label><input type="text" id="giveBalanceReason" placeholder="سبب اعطاء الرصيد"></div>
+                                <button class="btn btn-primary" onclick="giveBalance()"><i class="fas fa-check"></i> اعطاء رصيد</button>
+                            </div>
+                        </div>
+                        <div class="admin-card">
+                            <div class="card-header"><i class="fas fa-minus-circle"></i><h3>سحب رصيد</h3></div>
+                            <div class="card-body">
+                                <div class="input-group"><label>معرف الديسكورد</label><input type="text" id="takeBalanceUser" placeholder="Discord ID"></div>
+                                <div class="input-group"><label>المبلغ (جنيه)</label><input type="number" id="takeBalanceAmount" placeholder="المبلغ"></div>
+                                <div class="input-group"><label>السبب</label><input type="text" id="takeBalanceReason" placeholder="سبب سحب الرصيد"></div>
+                                <button class="btn btn-danger" onclick="takeBalance()"><i class="fas fa-check"></i> سحب رصيد</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-card full-width" style="margin-top:20px;">
+                        <div class="card-header"><i class="fas fa-history"></i><h3>سجل تحويلات الرصيد</h3></div>
+                        <div class="card-body"><div class="table-wrapper"><table class="admin-table"><thead><tr><th>المستخدم</th><th>النوع</th><th>المبلغ</th><th>السبب</th><th>بواسطة</th><th>التاريخ</th></tr></thead><tbody id="balanceLogsTable"><tr><td colspan="6" class="text-center">جاري التحميل...</td></tr></tbody></table></div></div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: الحظر -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-bans">
+                    <div class="admin-grid-2">
+                        <div class="admin-card">
+                            <div class="card-header"><i class="fas fa-ban"></i><h3>حظر لاعب</h3></div>
+                            <div class="card-body">
+                                <div class="input-group"><label>معرف الديسكورد</label><input type="text" id="banUserId" placeholder="Discord ID"></div>
+                                <div class="input-group"><label>سبب الحظر</label><input type="text" id="banReason" placeholder="سبب الحظر"></div>
+                                <button class="btn btn-danger" onclick="banUser()"><i class="fas fa-ban"></i> حظر</button>
+                            </div>
+                        </div>
+                        <div class="admin-card">
+                            <div class="card-header"><i class="fas fa-check-circle"></i><h3>فك حظر</h3></div>
+                            <div class="card-body">
+                                <div class="input-group"><label>معرف الديسكورد</label><input type="text" id="unbanUserId" placeholder="Discord ID"></div>
+                                <button class="btn btn-primary" onclick="unbanUser()"><i class="fas fa-check"></i> فك الحظر</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-card full-width" style="margin-top:20px;">
+                        <div class="card-header"><i class="fas fa-list"></i><h3>قائمة المحظورين</h3></div>
+                        <div class="card-body"><div class="table-wrapper"><table class="admin-table"><thead><tr><th>المستخدم</th><th>سبب الحظر</th><th>بواسطة</th><th>التاريخ</th></tr></thead><tbody id="bannedUsersTable"><tr><td colspan="4" class="text-center">جاري التحميل...</td></tr></tbody></table></div></div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: ادارة المتجر -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-shop">
+                    <div class="admin-card full-width">
+                        <div class="card-header"><i class="fas fa-plus-circle"></i><h3>اضافة منتج جديد</h3></div>
+                        <div class="card-body">
+                            <div class="admin-grid-3">
+                                <div class="input-group"><label>اسم المنتج</label><input type="text" id="shopName" placeholder="اسم المنتج"></div>
+                                <div class="input-group"><label>السعر (جنيه)</label><input type="number" id="shopPrice" placeholder="السعر"></div>
+                                <div class="input-group"><label>النوع</label><select id="shopType"><option value="vehicle">سيارة</option><option value="skin">سكن</option><option value="feature">ميزة</option></select></div>
+                                <div class="input-group"><label>الفئة</label><select id="shopCategory"><option value="vehicles">سيارات</option><option value="features">مميزات</option><option value="items">ادوات</option></select></div>
+                                <div class="input-group"><label>القيمة (موديل السيارة)</label><input type="text" id="shopValue" placeholder="مثلا: 411"></div>
+                                <div class="input-group"><label>رابط الصورة</label><input type="text" id="shopImage" placeholder="رابط الصورة"></div>
+                            </div>
+                            <div class="input-group"><label>الوصف</label><input type="text" id="shopDescription" placeholder="وصف المنتج"></div>
+                            <button class="btn btn-primary" onclick="addShopItem()"><i class="fas fa-plus"></i> اضافة منتج</button>
+                        </div>
+                    </div>
+                    <div class="admin-card full-width" style="margin-top:20px;">
+                        <div class="card-header"><i class="fas fa-list"></i><h3>جميع المنتجات</h3></div>
+                        <div class="card-body"><div class="table-wrapper"><table class="admin-table"><thead><tr><th>ID</th><th>الاسم</th><th>السعر</th><th>النوع</th><th>الحالة</th><th>اجراءات</th></tr></thead><tbody id="shopItemsTable"><tr><td colspan="6" class="text-center">جاري التحميل...</td></tr></tbody></table></div></div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: السجلات -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-logs">
+                    <div class="admin-tabs-inner">
+                        <button class="admin-tab-inner active" data-log="log-login">سجل الدخول والخروج</button>
+                        <button class="admin-tab-inner" data-log="log-purchases">سجل المشتريات</button>
+                        <button class="admin-tab-inner" data-log="log-balance">سجل الرصيد</button>
+                        <button class="admin-tab-inner" data-log="log-bans">سجل الحظر</button>
+                    </div>
+                    <div class="admin-card full-width" style="margin-top:20px;">
+                        <div class="card-body"><div class="table-wrapper"><table class="admin-table"><thead id="logsTableHead"><tr><th>المستخدم</th><th>الحدث</th><th>التاريخ</th></tr></thead><tbody id="logsTableBody"><tr><td colspan="3" class="text-center">اختر نوع السجل</td></tr></tbody></table></div></div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: احصائيات -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-stats">
+                    <div class="admin-stats">
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-eye"></i></div><div class="stat-info"><span class="stat-label">زوار اليوم</span><span class="stat-value" id="dailyVisitors">0</span></div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-mouse-pointer"></i></div><div class="stat-info"><span class="stat-label">الصفحات المفتوحة</span><span class="stat-value" id="totalPageViews">0</span></div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-info"><span class="stat-label">ساعة الذروة</span><span class="stat-value" id="peakHour">-</span></div></div>
+                    </div>
+                    <div class="admin-card full-width" style="margin-top:20px;">
+                        <div class="card-header"><i class="fas fa-chart-line"></i><h3>المبيعات</h3></div>
+                        <div class="card-body"><div id="salesChart" style="text-align:center; padding:40px; color:#888;">جاري التحميل...</div></div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: بحث عن لاعب -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-search">
+                    <div class="admin-card full-width">
+                        <div class="card-header"><i class="fas fa-search"></i><h3>بحث عن لاعب</h3></div>
+                        <div class="card-body">
+                            <div class="admin-grid-2">
+                                <div class="input-group"><label>معرف الديسكورد او اسم MTA</label><input type="text" id="searchQuery" placeholder="ادخل Discord ID او اسم MTA"></div>
+                                <button class="btn btn-primary" onclick="searchPlayer()" style="margin-top:24px;"><i class="fas fa-search"></i> بحث</button>
+                            </div>
+                            <div id="searchResult" style="margin-top:20px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: الاداريين المتصلين -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-staff">
+                    <div class="admin-card full-width">
+                        <div class="card-header"><i class="fas fa-users-cog"></i><h3>الاداريين المتصلين الان</h3><button class="btn-refresh" onclick="loadOnlineStaff()" title="تحديث"><i class="fas fa-sync-alt"></i></button></div>
+                        <div class="card-body"><div id="onlineStaffGrid" class="staff-online-grid"><div class="text-center" style="padding:20px; color:#888;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</div></div></div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: ادارة الدردشة -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-chat">
+                    <div class="admin-card full-width">
+                        <div class="card-header"><i class="fas fa-comments"></i><h3>ادارة الدردشة</h3></div>
+                        <div class="card-body">
+                            <button class="btn btn-danger" onclick="clearAllChat()" style="margin-bottom:20px;"><i class="fas fa-trash"></i> مسح جميع الرسائل</button>
+                            <div class="table-wrapper"><table class="admin-table"><thead><tr><th>ID</th><th>المستخدم</th><th>الرسالة</th><th>الوقت</th><th>اجراءات</th></tr></thead><tbody id="chatLogsTable"><tr><td colspan="5" class="text-center">جاري التحميل...</td></tr></tbody></table></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB: التذاكر -->
+                <!-- ============================================== -->
+                <div class="admin-tab-content" id="tab-tickets">
+                    <div class="admin-grid-2">
+                        <!-- قائمة التذاكر -->
+                        <div class="admin-card">
+                            <div class="card-header">
+                                <i class="fas fa-ticket-alt"></i>
+                                <h3>جميع التذاكر</h3>
+                                <button class="btn-refresh" onclick="loadAllTickets()" title="تحديث">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="ticket-filters">
+                                    <button class="filter-btn active" onclick="filterTickets('all', this)">الكل</button>
+                                    <button class="filter-btn" onclick="filterTickets('open', this)">مفتوحة</button>
+                                    <button class="filter-btn" onclick="filterTickets('replied', this)">تم الرد</button>
+                                    <button class="filter-btn" onclick="filterTickets('closed', this)">مقفولة</button>
+                                </div>
+                                <div id="allTicketsList" style="max-height:500px;overflow-y:auto;">
+                                    <div class="text-center" style="padding:30px;color:#888;">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        <p>جاري تحميل التذاكر...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- تفاصيل التذكرة والمحادثة -->
+                        <div class="admin-card" id="ticketDetailCard" style="display:none;">
+                            <div class="card-header">
+                                <i class="fas fa-reply"></i>
+                                <h3>تفاصيل التذكرة</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="ticketDetail">
+                                    <!-- يتم ملؤه ديناميكياً -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/admin.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+</html>

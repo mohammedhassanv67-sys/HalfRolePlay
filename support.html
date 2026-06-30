@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalfRolePlay - الدعم الفني</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/support.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/particles.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="assets/images/logo.png" alt="HalfRolePlay">
+                <span>Half<span>RolePlay</span></span>
+            </div>
+        </div>
+
+        <div class="sidebar-user" id="sidebarUser">
+            <div class="sidebar-user-content hidden" id="sidebarUserContent">
+                <img src="assets/images/user-avatar.png" alt="User" class="sidebar-user-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name" id="sidebarUsername">زائر</div>
+                    <div class="sidebar-user-rank" id="sidebarRank">غير مسجل</div>
+                </div>
+            </div>
+            <div class="sidebar-guest" id="sidebarGuest">
+                <i class="fas fa-user-circle"></i>
+                <span>زائر</span>
+            </div>
+        </div>
+
+        <div class="sidebar-auth">
+            <button class="btn-login" id="sidebarLoginBtn" onclick="window.location.href='/auth/discord'">
+                <i class="fab fa-discord"></i> تسجيل الدخول
+            </button>
+            <div class="user-info-sidebar hidden" id="sidebarUserInfo">
+                <button class="btn-logout" onclick="window.location.href='/auth/logout'">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                </button>
+            </div>
+        </div>
+
+        <nav class="sidebar-links">
+            <a href="/index.html" class="sidebar-link"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+            <a href="/shop.html" class="sidebar-link"><i class="fas fa-store"></i><span>المتجر</span></a>
+            <a href="/chat.html" class="sidebar-link"><i class="fas fa-comments"></i><span>الدردشة</span></a>
+            <a href="/apply.html" class="sidebar-link"><i class="fas fa-file-alt"></i><span>تقديم على الادارة</span></a>
+            <a href="/support.html" class="sidebar-link active"><i class="fas fa-headset"></i><span>الدعم الفني</span></a>
+            <a href="/server-status.html" class="sidebar-link"><i class="fas fa-server"></i><span>حالة السيرفر</span></a>
+            <a href="/dashboard.html" class="sidebar-link"><i class="fas fa-user"></i><span>لوحة التحكم</span></a>
+            <a href="/admin.html" class="sidebar-link" id="sidebarAdminLink" style="display:none;"><i class="fas fa-shield-alt"></i><span>لوحة الادمن</span></a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-social">
+                <a href="https://discord.gg/HalfRp" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+            <p>&copy; 2026 HalfRolePlay</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <button class="sidebar-toggle-mobile" onclick="toggleSidebarMobile()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <section class="support-section">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-headset"></i> الدعم الفني</h1>
+                    <p>تواصل مع فريق الدعم الفني وسيتم الرد عليك في اقرب وقت</p>
+                </div>
+
+                <!-- رسالة للمستخدمين غير المسجلين -->
+                <div id="loginPrompt" style="display:none;">
+                    <div class="support-card" style="text-align:center; padding:40px;">
+                        <i class="fas fa-lock" style="font-size:48px; color:#f87171; margin-bottom:16px;"></i>
+                        <h3 style="color:#f87171; margin-bottom:8px;">يجب تسجيل الدخول</h3>
+                        <p style="color:#888; margin-bottom:20px;">يجب عليك تسجيل الدخول لتتمكن من ارسال تذكرة دعم</p>
+                        <a href="/auth/discord" class="btn-primary" style="display:inline-flex;">
+                            <i class="fab fa-discord"></i> تسجيل الدخول
+                        </a>
+                    </div>
+                </div>
+
+                <div class="support-grid" id="supportContent">
+                    <!-- نموذج ارسال تذكرة -->
+                    <div class="support-card">
+                        <div class="card-header">
+                            <i class="fas fa-ticket-alt"></i>
+                            <h3>تذكرة جديدة</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label><i class="fas fa-tag"></i> نوع المشكلة</label>
+                                <select id="ticketType">
+                                    <option value="">اختر نوع المشكلة</option>
+                                    <option value="technical">مشكلة تقنية</option>
+                                    <option value="account">مشكلة في الحساب</option>
+                                    <option value="payment">مشكلة في الدفع</option>
+                                    <option value="game">مشكلة في اللعبة</option>
+                                    <option value="other">اخرى</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-pen"></i> عنوان المشكلة</label>
+                                <input type="text" id="ticketTitle" placeholder="اكتب عنوان مختصر للمشكلة">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-align-left"></i> وصف المشكلة</label>
+                                <textarea id="ticketMessage" rows="5" placeholder="اشرح مشكلتك بالتفصيل..."></textarea>
+                            </div>
+                            <button class="btn-primary" onclick="submitTicket()" id="submitBtn">
+                                <i class="fas fa-paper-plane"></i> ارسال التذكرة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- قائمة التذاكر -->
+                    <div class="support-card">
+                        <div class="card-header">
+                            <i class="fas fa-list"></i>
+                            <h3>تذاكري</h3>
+                            <span class="ticket-count" id="ticketCount">0</span>
+                        </div>
+                        <div class="card-body">
+                            <div id="ticketsList">
+                                <div class="text-center" style="padding:30px; color:#888;">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>جاري تحميل التذاكر...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نافذة المحادثة -->
+                <div id="ticketChatModal" style="display:none;">
+                    <div class="ticket-chat-overlay" onclick="closeTicketChat()"></div>
+                    <div class="ticket-chat-container">
+                        <div class="ticket-chat-header">
+                            <div class="ticket-chat-info">
+                                <i class="fas fa-ticket-alt"></i>
+                                <div>
+                                    <h3 id="chatTicketTitle">تذكرة #0</h3>
+                                    <span id="chatTicketStatus" class="ticket-status open">مفتوحة</span>
+                                </div>
+                            </div>
+                            <button class="ticket-chat-close" onclick="closeTicketChat()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="ticket-chat-messages" id="ticketChatMessages">
+                            <div class="text-center" style="padding:40px;color:#888;">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>جاري تحميل المحادثة...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-chat-input" id="ticketChatInputArea">
+                            <textarea id="ticketMessageInput" placeholder="اكتب رسالتك هنا... (Enter للإرسال)" rows="2"></textarea>
+                            <div class="ticket-chat-actions">
+                                <button class="btn-send" onclick="sendTicketMessage()" id="sendTicketBtn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-chat-closed" id="ticketClosedMessage" style="display:none;">
+                            <div class="text-center" style="padding:16px;">
+                                <i class="fas fa-lock" style="color:#f87171;"></i>
+                                <span style="color:#f87171;">هذه التذكرة مقفولة - لا يمكن إرسال رسائل جديدة</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/support.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+</html>

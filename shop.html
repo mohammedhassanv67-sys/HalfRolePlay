@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalfRolePlay - المتجر</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/shop.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+</head>
+<body>
+
+    <div id="notificationContainer"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="assets/images/logo.png" alt="HalfRolePlay">
+                <span>Half<span>RolePlay</span></span>
+            </div>
+        </div>
+
+        <div class="sidebar-user" id="sidebarUser">
+            <div class="sidebar-user-content hidden" id="sidebarUserContent">
+                <img src="assets/images/user-avatar.png" alt="User" class="sidebar-user-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name" id="sidebarUsername">زائر</div>
+                    <div class="sidebar-user-rank" id="sidebarRank">غير مسجل</div>
+                </div>
+            </div>
+            <div class="sidebar-guest" id="sidebarGuest">
+                <i class="fas fa-user-circle"></i>
+                <span>زائر</span>
+            </div>
+        </div>
+
+        <div class="sidebar-auth">
+            <button class="btn-login" id="sidebarLoginBtn" onclick="window.location.href='/auth/discord'">
+                <i class="fab fa-discord"></i> تسجيل الدخول
+            </button>
+            <div class="user-info-sidebar hidden" id="sidebarUserInfo">
+                <button class="btn-logout" onclick="window.location.href='/auth/logout'">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                </button>
+            </div>
+        </div>
+
+        <nav class="sidebar-links">
+            <a href="/index.html" class="sidebar-link active"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+            <a href="/shop.html" class="sidebar-link"><i class="fas fa-store"></i><span>المتجر</span></a>
+            <a href="/chat.html" class="sidebar-link"><i class="fas fa-comments"></i><span>الدردشة</span></a>
+            <a href="/apply.html" class="sidebar-link"><i class="fas fa-file-alt"></i><span>تقديم على الادارة</span></a>
+            <a href="/server-status.html" class="sidebar-link"><i class="fas fa-server"></i><span>حالة السيرفر</span></a>
+            <a href="/dashboard.html" class="sidebar-link"><i class="fas fa-user"></i><span>لوحة التحكم</span></a>
+            <a href="/admin.html" class="sidebar-link" id="sidebarAdminLink" style="display:none;"><i class="fas fa-shield-alt"></i><span>لوحة الادمن</span></a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-social">
+                <a href="https://discord.gg/HalfRp" target="_blank"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2026 HalfRolePlay</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <button class="sidebar-toggle-mobile" onclick="toggleSidebarMobile()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="sidebar-overlay-mobile" onclick="toggleSidebarMobile()"></div>
+
+        <section class="shop">
+            <div class="container">
+                <div class="shop-header">
+                    <h1><i class="fas fa-store"></i> المتجر</h1>
+                    <p>اشتر السيارات والمميزات اللي تناسبك</p>
+                    <div class="shop-balance">
+                        <span>جنيه مصري</span>
+                        <span class="balance-amount" id="shopBalance">جاري التحميل...</span>
+                    </div>
+                    <div id="linkStatus" class="link-status" style="display:none; margin-top:10px; padding:8px 16px; border-radius:8px; font-size:14px;"></div>
+                </div>
+
+                <div class="shop-tabs">
+                    <button class="tab-btn active" data-tab="vehicles">
+                        <i class="fas fa-car"></i> السيارات
+                    </button>
+                    <button class="tab-btn" data-tab="features">
+                        <i class="fas fa-crown"></i> الراعي VIP
+                    </button>
+                </div>
+
+                <div class="shop-section active" id="vehicles">
+                    <div class="shop-grid" id="vehiclesGrid">
+                        <div class="shop-loading">
+                            <i class="fas fa-spinner"></i>
+                            <span>جاري تحميل المنتجات...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shop-section" id="features">
+                    <div class="vip-header">
+                        <h2>نظام الراعي VIP</h2>
+                        <p>اختر الراعي المناسب لك واحصل على مميزات رائعة ومكافآت مالية</p>
+                        <p style="color: #f87171; font-size: 13px; margin-top: 8px;">يجب أن تكون متصل في السيرفر لتتمكن من الشراء</p>
+                    </div>
+                    <div class="vip-grid" id="vipGrid"></div>
+                </div>
+            </div>
+        </section>
+
+        <div id="purchaseModal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('purchaseModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="modal-icon-wrapper">
+                    <div class="modal-icon-bg">
+                        <i class="fas fa-shopping-bag" id="modalIcon"></i>
+                    </div>
+                </div>
+                
+                <h2 class="modal-title">تأكيد الشراء</h2>
+                <p class="modal-subtitle">يرجى مراجعة تفاصيل الطلب قبل التأكيد</p>
+                
+                <div class="purchase-item-preview">
+                    <div class="purchase-item-icon">
+                        <i class="fas fa-car" id="purchaseItemIcon"></i>
+                    </div>
+                    <div class="purchase-item-info">
+                        <span class="purchase-item-name" id="purchaseItem">-</span>
+                        <span class="purchase-item-type" id="purchaseItemType">منتج رقمي</span>
+                    </div>
+                    <div class="purchase-item-price" id="purchasePrice">0</div>
+                </div>
+                
+                <div class="purchase-divider"></div>
+                
+                <div class="purchase-balance-row">
+                    <span class="balance-label">رصيدك الحالي</span>
+                    <span class="balance-value" id="purchaseBalance">جاري التحميل...</span>
+                </div>
+                
+                <div class="purchase-balance-row after">
+                    <span class="balance-label">الرصيد بعد الشراء</span>
+                    <span class="balance-value highlight" id="purchaseAfterBalance">-</span>
+                </div>
+                
+                <div class="purchase-actions">
+                    <button class="btn-cancel" onclick="closeModal('purchaseModal')">
+                        <i class="fas fa-times"></i> إلغاء
+                    </button>
+                    <button class="btn-confirm" onclick="confirmPurchase()">
+                        <i class="fas fa-check"></i> تأكيد الشراء
+                        <span class="btn-confirm-loader"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <h3>Half<span>RolePlay</span></h3>
+                        <p>حيث تبدأ المغامرة الحقيقية</p>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2026 HalfRolePlay. جميع الحقوق محفوظة</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/shop.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+</html>

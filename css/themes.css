@@ -1,0 +1,47 @@
+/* ============================================================
+   Theme 1: البنفسجي (الافتراضي)
+   ============================================================ */
+[data-theme="purple"] {
+    --primary: #7c3aed;
+    --primary-dark: #5b21b6;
+    --primary-light: #a78bfa;
+    --primary-glow: rgba(124, 58, 237, 0.3);
+    --bg-main: #06060b;
+    --bg-card: rgba(12, 12, 24, 0.95);
+    --border-color: rgba(124, 58, 237, 0.12);
+    --text: #e8e8f0;
+    --text-muted: #71718a;
+    --text-light: #c4b5fd;
+}
+
+/* ============================================================
+   Theme 2: الازرق (نفس المقاسات - لون مختلف فقط)
+   ============================================================ */
+[data-theme="blue"] {
+    --primary: #3b82f6;
+    --primary-dark: #1d4ed8;
+    --primary-light: #60a5fa;
+    --primary-glow: rgba(59, 130, 246, 0.3);
+    --bg-main: #06080f;
+    --bg-card: rgba(12, 16, 28, 0.95);
+    --border-color: rgba(59, 130, 246, 0.12);
+    --text: #e2e8f0;
+    --text-muted: #8b8fa3;
+    --text-light: #93c5fd;
+}
+
+/* ============================================================
+   Theme 3: الاخضر (نفس المقاسات - لون مختلف فقط)
+   ============================================================ */
+[data-theme="green"] {
+    --primary: #afafaf;
+    --primary-dark: #afafaf;
+    --primary-light: #afafaf;
+    --primary-glow: #afafaf;
+    --bg-main: #060b08;
+    --bg-card: rgba(10, 22, 16, 0.95);
+    --border-color: rgba(16, 185, 129, 0.12);
+    --text: #d1fae5;
+    --text-muted: #6b7280;
+    --text-light: #afafaf;
+}

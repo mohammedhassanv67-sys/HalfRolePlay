@@ -1,0 +1,1390 @@
+/* ============================================================
+   المتجر - Shop (تصميم جديد مع الإشعارات)
+   ============================================================ */
+
+.shop {
+    padding: 100px 0 60px;
+    background: var(--bg-main);
+    min-height: 100vh;
+}
+
+/* ============================================================
+   رأس المتجر
+   ============================================================ */
+
+.shop-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.shop-header h1 {
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.shop-header h1 i {
+    color: var(--primary-light);
+    margin-left: 12px;
+}
+
+.shop-header h1::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    margin: 8px auto 0;
+    border-radius: 3px;
+}
+
+.shop-header p {
+    color: var(--text-muted);
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.shop-balance {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(20, 20, 42, 0.6);
+    backdrop-filter: blur(20px);
+    padding: 12px 28px;
+    border-radius: 16px;
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    margin-top: 16px;
+    font-size: 18px;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.shop-balance:hover {
+    border-color: rgba(124, 58, 237, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.08);
+}
+
+.balance-amount {
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;
+}
+
+/* ============================================================
+   تبويبات المتجر
+   ============================================================ */
+
+.shop-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tab-btn {
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(124, 58, 237, 0.12);
+    border-radius: 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(4px);
+}
+
+.tab-btn:hover {
+    background: rgba(124, 58, 237, 0.08);
+    color: var(--text);
+    transform: translateY(-2px);
+    border-color: rgba(124, 58, 237, 0.25);
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+}
+
+.shop-section {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.shop-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   شبكة المنتجات
+   ============================================================ */
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.shop-item {
+    background: rgba(20, 20, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(124, 58, 237, 0.12);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.shop-item:hover {
+    transform: translateY(-10px);
+    border-color: rgba(124, 58, 237, 0.3);
+    box-shadow: 0 12px 48px rgba(124, 58, 237, 0.1);
+}
+
+/* ============================================================
+   صورة المنتج
+   ============================================================ */
+
+.item-image {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(145deg, var(--bg-main), #0a0a14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 15px;
+}
+
+.item-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.5s ease;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+}
+
+.shop-item:hover .item-image img {
+    transform: scale(1.06);
+}
+
+/* ============================================================
+   تاج المنتج
+   ============================================================ */
+
+.item-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 16px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    z-index: 2;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.item-tag.vehicle {
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.2);
+}
+
+.item-tag.skin {
+    background: rgba(244, 114, 182, 0.15);
+    color: #f472b6;
+    border-color: rgba(244, 114, 182, 0.2);
+}
+
+.item-tag.money {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.2);
+}
+
+.item-tag.feature {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+.item-tag.item {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+    border-color: rgba(168, 85, 247, 0.2);
+}
+
+/* ============================================================
+   معلومات المنتج
+   ============================================================ */
+
+.item-info {
+    padding: 20px 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-info h3 {
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.shop-item:hover .item-info h3 {
+    color: var(--primary-light);
+}
+
+.item-info p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 12px;
+    flex: 1;
+    line-height: 1.6;
+}
+
+.item-details {
+    display: flex;
+    gap: 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.item-details span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.item-details i {
+    color: var(--primary-light);
+    width: 16px;
+    font-size: 13px;
+}
+
+/* ============================================================
+   السعر والشراء
+   ============================================================ */
+
+.item-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.price .coin-icon {
+    font-size: 18px;
+    color: #fbbf24;
+}
+
+.btn-buy {
+    padding: 9px 22px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font);
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-buy::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.btn-buy:hover::before {
+    opacity: 1;
+}
+
+.btn-buy:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4);
+}
+
+.btn-buy:active {
+    transform: scale(0.95);
+}
+
+.btn-buy .btn-spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+.btn-buy.loading .btn-text {
+    display: none;
+}
+.btn-buy.loading .btn-spinner {
+    display: inline-block;
+}
+
+/* ============================================================
+   حالة التحميل
+   ============================================================ */
+
+.shop-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-size: 18px;
+    background: rgba(20, 20, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(124, 58, 237, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.shop-loading i {
+    font-size: 44px;
+    color: var(--primary-light);
+    animation: spin 1.2s linear infinite;
+}
+
+/* ============================================================
+   مودال الشراء
+   ============================================================ */
+
+.purchase-details {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 18px 20px;
+    border-radius: 14px;
+    margin: 12px 0;
+    border: 1px solid rgba(124, 58, 237, 0.12);
+}
+
+.purchase-details p {
+    padding: 6px 0;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.purchase-details p strong {
+    color: var(--text-muted);
+}
+
+.purchase-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.purchase-actions .btn-secondary {
+    padding: 10px 24px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    border-radius: 12px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font);
+}
+
+.purchase-actions .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(124, 58, 237, 0.3);
+}
+
+.purchase-actions .btn-primary {
+    padding: 10px 28px;
+    font-size: 15px;
+}
+
+/* ============================================================
+   🔔 نظام الإشعارات
+   ============================================================ */
+
+#notificationContainer {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+    pointer-events: none;
+    padding: 0 16px;
+}
+
+.notification {
+    pointer-events: auto;
+    padding: 16px 20px;
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: notifSlideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.3s ease;
+}
+
+.notification:hover {
+    transform: scale(1.02);
+}
+
+.notification i {
+    font-size: 22px;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+}
+
+.notification .notif-content {
+    flex: 1;
+    line-height: 1.6;
+    min-width: 0;
+}
+
+.notification .notif-content .notif-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.notification .notif-content .notif-desc {
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.85;
+}
+
+.notification .notif-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.notification .notif-close:hover {
+    color: #fff;
+    transform: rotate(90deg);
+}
+
+/* ✅ ألوان الإشعارات */
+.notification.success {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.25);
+}
+.notification.success i { color: #34d399; }
+
+.notification.error {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.25);
+}
+.notification.error i { color: #f87171; }
+
+.notification.warning {
+    background: rgba(251, 191, 36, 0.12);
+    border-color: rgba(251, 191, 36, 0.25);
+}
+.notification.warning i { color: #fbbf24; }
+
+.notification.info {
+    background: rgba(96, 165, 250, 0.12);
+    border-color: rgba(96, 165, 250, 0.25);
+}
+.notification.info i { color: #60a5fa; }
+
+/* ✅ أنيميشن الدخول */
+@keyframes notifSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ✅ أنيميشن الخروج */
+.notification.removing {
+    animation: notifSlideUp 0.3s ease forwards;
+}
+
+@keyframes notifSlideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+}
+
+/* ============================================================
+   أنيميشن
+   ============================================================ */
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   استجابة
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .shop {
+        padding: 80px 0 40px;
+    }
+    
+    .shop-header h1 {
+        font-size: 28px;
+    }
+    
+    .shop-tabs {
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .tab-btn {
+        justify-content: center;
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+    
+    .shop-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+    }
+    
+    .item-image {
+        height: 160px;
+        padding: 10px;
+    }
+    
+    .shop-balance {
+        font-size: 15px;
+        padding: 10px 20px;
+    }
+    
+    .balance-amount {
+        font-size: 17px;
+    }
+    
+    .item-info {
+        padding: 16px 18px;
+    }
+    
+    .item-info h3 {
+        font-size: 17px;
+    }
+    
+    .price {
+        font-size: 17px;
+    }
+    
+    .btn-buy {
+        padding: 7px 16px;
+        font-size: 13px;
+    }
+
+    #notificationContainer {
+        padding: 0 12px;
+        top: 10px;
+    }
+    
+    .notification {
+        padding: 14px 16px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+    
+    .notification i {
+        font-size: 18px;
+        width: 24px;
+    }
+    
+    .notification .notif-content .notif-title {
+        font-size: 13px;
+    }
+    
+    .notification .notif-content .notif-desc {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .shop-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    .item-image {
+        height: 120px;
+        padding: 8px;
+    }
+    
+    .item-info {
+        padding: 12px 14px;
+    }
+    
+    .item-info h3 {
+        font-size: 15px;
+    }
+    
+    .item-info p {
+        font-size: 12px;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .item-details {
+        font-size: 11px;
+        gap: 8px;
+        margin-bottom: 10px;
+        padding: 6px 0;
+    }
+    
+    .item-details i {
+        font-size: 11px;
+    }
+    
+    .price {
+        font-size: 14px;
+    }
+    
+    .btn-buy {
+        padding: 6px 12px;
+        font-size: 12px;
+        gap: 4px;
+    }
+    
+    .btn-buy i {
+        font-size: 12px;
+    }
+    
+    .shop-balance {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+    
+    .balance-amount {
+        font-size: 14px;
+    }
+    
+    .item-tag {
+        font-size: 9px;
+        padding: 3px 10px;
+        top: 8px;
+        right: 8px;
+    }
+    
+    .purchase-details {
+        padding: 12px 14px;
+    }
+    
+    .purchase-details p {
+        font-size: 14px;
+    }
+    
+    .purchase-actions {
+        flex-direction: column;
+    }
+    
+    .purchase-actions .btn-secondary,
+    .purchase-actions .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #notificationContainer {
+        padding: 0 8px;
+        top: 8px;
+    }
+    
+    .notification {
+        padding: 12px 14px;
+        font-size: 13px;
+        border-radius: 8px;
+        gap: 10px;
+    }
+    
+    .notification i {
+        font-size: 16px;
+        width: 20px;
+    }
+    
+    .notification .notif-content .notif-title {
+        font-size: 12px;
+    }
+    
+    .notification .notif-content .notif-desc {
+        font-size: 11px;
+    }
+    
+    .notification .notif-close {
+        font-size: 16px;
+        padding: 2px 4px;
+    }
+}
+
+@media (max-width: 380px) {
+    .shop-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    
+    .item-image {
+        height: 180px;
+    }
+}
+
+
+/* ============================================================
+   مودال الشراء (نسخة محسّنة)
+   ============================================================ */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    z-index: 9998;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content {
+    background: rgba(14, 14, 30, 0.95);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 24px;
+    padding: 40px 36px 32px;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(20px);
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: var(--text-muted);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: var(--font);
+}
+
+.modal-close:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    transform: rotate(90deg);
+}
+
+/* ✅ أيقونة المودال */
+.modal-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.modal-icon-bg {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: var(--primary-light);
+}
+
+.modal-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: #fff;
+}
+
+.modal-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+/* ✅ معاينة المنتج */
+.purchase-item-preview {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+}
+
+.purchase-item-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(124, 58, 237, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--primary-light);
+    flex-shrink: 0;
+}
+
+.purchase-item-info {
+    flex: 1;
+}
+
+.purchase-item-name {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.purchase-item-type {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.purchase-item-price {
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ✅ الفاصل */
+.purchase-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.2), transparent);
+    margin: 0 0 16px 0;
+}
+
+/* ✅ الرصيد */
+.purchase-balance-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 15px;
+}
+
+.purchase-balance-row .balance-label {
+    color: var(--text-muted);
+}
+
+.purchase-balance-row .balance-value {
+    font-weight: 600;
+    color: #fff;
+}
+
+.purchase-balance-row .balance-value.highlight {
+    color: #34d399;
+    font-weight: 700;
+}
+
+.purchase-balance-row.after {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 12px;
+    margin-top: 4px;
+}
+
+/* ✅ الأزرار */
+.purchase-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.purchase-actions .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    color: var(--text-muted);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.purchase-actions .btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.purchase-actions .btn-confirm {
+    flex: 2;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.purchase-actions .btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.3);
+}
+
+.purchase-actions .btn-confirm:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-confirm-loader {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+.btn-confirm.loading .btn-confirm-loader {
+    display: inline-block;
+}
+
+.btn-confirm.loading i {
+    display: none;
+}
+
+/* ✅ استجابة المودال */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 28px 20px 24px;
+        border-radius: 18px;
+        margin: 10px;
+    }
+    
+    .modal-icon-bg {
+        width: 60px;
+        height: 60px;
+        font-size: 26px;
+    }
+    
+    .modal-title {
+        font-size: 20px;
+    }
+    
+    .purchase-item-preview {
+        padding: 12px 14px;
+        flex-wrap: wrap;
+    }
+    
+    .purchase-item-price {
+        font-size: 16px;
+        width: 100%;
+        text-align: left;
+        padding-top: 4px;
+    }
+    
+    .purchase-actions {
+        flex-direction: column;
+    }
+    
+    .purchase-actions .btn-cancel,
+    .purchase-actions .btn-confirm {
+        padding: 14px;
+        font-size: 16px;
+    }
+    
+    .purchase-balance-row {
+        font-size: 14px;
+    }
+}
+
+
+/* ============================================================
+   👑 قسم الراعي VIP
+   ============================================================ */
+
+.vip-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.vip-header h2 {
+    font-size: 28px;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+
+.vip-header p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.vip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.vip-card {
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    padding: 25px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.vip-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.vip-card:hover {
+    transform: translateY(-8px);
+}
+
+.vip-card.bronze::before { background: linear-gradient(90deg, #CD7F32, #8B4513); }
+.vip-card.bronze:hover { border-color: #CD7F32; box-shadow: 0 10px 30px rgba(205, 127, 50, 0.3); }
+
+.vip-card.silver::before { background: linear-gradient(90deg, #C0C0C0, #808080); }
+.vip-card.silver:hover { border-color: #C0C0C0; box-shadow: 0 10px 30px rgba(192, 192, 192, 0.3); }
+
+.vip-card.gold::before { background: linear-gradient(90deg, #FFD700, #FFA500); }
+.vip-card.gold:hover { border-color: #FFD700; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3); }
+
+.vip-card.diamond::before { background: linear-gradient(90deg, #00BFFF, #1E90FF); }
+.vip-card.diamond:hover { border-color: #00BFFF; box-shadow: 0 10px 30px rgba(0, 191, 255, 0.3); }
+
+.vip-card.premium::before { background: linear-gradient(90deg, #FF6B6B, #FF1493); }
+.vip-card.premium:hover { border-color: #FF6B6B; box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3); }
+
+.vip-card.premiumplus::before { background: linear-gradient(90deg, #FF1493, #8B008B); }
+.vip-card.premiumplus:hover { border-color: #FF1493; box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3); }
+
+.vip-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.vip-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.vip-duration {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.vip-reward {
+    background: rgba(255, 215, 0, 0.1);
+    color: #FFD700;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 14px;
+}
+
+.vip-features {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    text-align: right;
+    flex: 1;
+}
+
+.vip-features li {
+    padding: 5px 0;
+    color: #d1d5db;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vip-features li i {
+    color: #4ade80;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.vip-price-section {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vip-price {
+    font-size: 22px;
+    font-weight: 800;
+    color: #4ade80;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.vip-price small {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.vip-buy-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    font-family: var(--font);
+}
+
+.vip-card.bronze .vip-buy-btn:hover { background: #CD7F32; }
+.vip-card.silver .vip-buy-btn:hover { background: #808080; }
+.vip-card.gold .vip-buy-btn:hover { background: #FFA500; }
+.vip-card.diamond .vip-buy-btn:hover { background: #00BFFF; }
+.vip-card.premium .vip-buy-btn:hover { background: #FF6B6B; }
+.vip-card.premiumplus .vip-buy-btn:hover { background: #FF1493; }
+
+.vip-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: #fff;
+    z-index: 1;
+}
+
+.vip-badge.recommended {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .vip-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+    }
+    
+    .vip-card {
+        padding: 20px 16px;
+    }
+    
+    .vip-icon {
+        font-size: 38px;
+    }
+    
+    .vip-card h3 {
+        font-size: 17px;
+    }
+    
+    .vip-price {
+        font-size: 19px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vip-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .vip-card {
+        padding: 16px 12px;
+    }
+    
+    .vip-icon {
+        font-size: 32px;
+    }
+    
+    .vip-card h3 {
+        font-size: 15px;
+    }
+    
+    .vip-features li {
+        font-size: 11px;
+    }
+    
+    .vip-price {
+        font-size: 16px;
+    }
+    
+    .vip-buy-btn {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 380px) {
+    .vip-grid {
+        grid-template-columns: 1fr;
+    }
+}
