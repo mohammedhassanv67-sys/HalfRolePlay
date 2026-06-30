@@ -1,6 +1,5 @@
 const mysql = require('mysql');
-const config = require('../config.json');
-
+require('dotenv').config();
 // ==============================================
 // 🔹 إعدادات قاعدة البيانات
 // ==============================================
